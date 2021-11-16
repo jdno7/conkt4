@@ -154,14 +154,18 @@ function checkForWin() {
   }
 
   // TODO: read and understand this code. Add comments to help you.
-
+  // loops through every cell and checks if theres 4 in a row in 4 directions
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
+      // creates a new array of 4 cells to the right
       const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      // creates new array of 4 cells up
       const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      // creates new array 4 cells diagonal (up+right)
       const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      // creates new array 4 cells diagonal (up+left)
       const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-
+        // checks to see if any of the arrays has the same player for all 4 elements
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
