@@ -5,8 +5,13 @@
  * board fills (tie)
  */
 
+
+
+
 const WIDTH = 7;
 const HEIGHT = 6;
+
+
 
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -19,10 +24,12 @@ function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   
   for (let y = 0; y < HEIGHT; y ++ ){
-    board.push([]);
-    for (let x = 0 ; x < WIDTH; x ++){
-      board[y].push(null)
-    }
+    // board.push([]);
+    board.push(Array.from({ length: WIDTH }))
+    // for (let x = 0 ; x < WIDTH; x ++){
+    //   // board[y].push(undefined)
+      
+    // }
   }
   // console.log(board);
 }
@@ -66,14 +73,12 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
    for (let y = HEIGHT - 1; y >= 0; y --){
-    if(!document.getElementById(`${y}-${x}`).childElementCount){
+    if(!board[y][x]){
       return y;
-      // console.log(document.getElementById(`${y}-${x}`).childElementCount);
-      // return;
     }
     
    }
-   
+   return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -92,13 +97,12 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  if (checkForWin()){
-    alert (`Player ${currPlayer} YOU WIN!!`);
+      alert (msg);
   }
-}
+
 
 const checkForTie = () => {
-  if (board.every(row => row.every(cell => typeof cell === 'number' ? true : false))){
+  if (board.every(row => row.every(cell => cell))){
     alert ('Game ends in a TIE');
   }
 }
@@ -154,18 +158,14 @@ function checkForWin() {
   }
 
   // TODO: read and understand this code. Add comments to help you.
-  // loops through every cell and checks if theres 4 in a row in 4 directions
+
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      // creates a new array of 4 cells to the right
       const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      // creates new array of 4 cells up
       const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      // creates new array 4 cells diagonal (up+right)
       const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      // creates new array 4 cells diagonal (up+left)
       const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-        // checks to see if any of the arrays has the same player for all 4 elements
+
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
@@ -175,3 +175,5 @@ function checkForWin() {
 
 makeBoard();
 makeHtmlBoard();
+
+  
